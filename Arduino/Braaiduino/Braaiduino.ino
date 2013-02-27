@@ -6,10 +6,10 @@
 
 
 // Configuration variables for network / updating 
-char ssid[] = "Penguinpowered";     //  your network SSID (name)
-char pass[] = "Lemmings live here";    // your network password
-IPAddress serverAddress(192,168,10,28);   // Address of the server to communicate with
-String webServiceIP = "192.168.10.28";
+char ssid[] = "YOURSSID";     //  your network SSID (name)
+char pass[] = "YOURPASSWORD";    // your network password
+IPAddress serverAddress(192,168,1,1);   // Address of the server to communicate with
+String webServiceIP = "192.168.1.1";
 int serverPort = 3000;
 
 long displayTempUpdateInterval = 15000; // the amount of time (in millseconds) between performing temperature checks (30s)
