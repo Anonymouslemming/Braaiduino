@@ -6,14 +6,14 @@
 
 
 // Configuration variables for network / updating 
-char ssid[] = "YOURSSID";     //  your network SSID (name)
-char pass[] = "YOURPASSWORD";    // your network password
-IPAddress serverAddress(192,168,1,1);   // Address of the server to communicate with
-String webServiceIP = "192.168.1.1";
+char ssid[] = "Penguinpowered";     //  your network SSID (name)
+char pass[] = "Lemmings live here";    // your network password
+IPAddress serverAddress(192,168,10,28);   // Address of the server to communicate with
+String webServiceIP = "192.168.10.28";
 int serverPort = 3000;
 
-long displayTempUpdateInterval = 30000; // the amount of time (in millseconds) between performing temperature checks (30s)
-long netTempUpdateInterval = 180000; // the amount of time between updating the server (180s / 3 min)
+long displayTempUpdateInterval = 15000; // the amount of time (in millseconds) between performing temperature checks (30s)
+long netTempUpdateInterval = 120000; // the amount of time between updating the server (180s / 3 min)
 
 // initialize the library with the numbers of the interface pins
 LiquidCrystal595 lcd(5,6,8);
@@ -144,6 +144,23 @@ String findEndStatus(String endStatus) {
   return tmpEndStatus;
 }
 
+/* padTemp
+   Pad temperatures to 3 characters
+   This is required to clear spaces where a lager temperature would leave 
+   characters on the screen when the next temp is displayed
+*/
+String padTemp(int temp) {
+  String tempString = String(temp);
+  
+  if (temp < 100 && temp > 10) {
+    tempString = tempString + " ";
+  } else if (temp < 10) {
+    tempString = tempString + "  ";
+  }
+ 
+ return tempString; 
+}
+
 /* showCookState
    Display the state of the cook on the LCD
    0 = OFF / No cook happening
@@ -243,7 +260,7 @@ void updateTemperatures() {
       if (food_temp == -67) {
         lcd.print("NP");
       } else {
-        lcd.print(food_temp);
+        lcd.print(padTemp(food_temp));
       }
       lcd.setCursor(9, 0);
     } else if (lastTempDisplayed == "PIT") {
@@ -251,12 +268,12 @@ void updateTemperatures() {
       if (pit_temp == -67) {
         lcd.print("NP");
       } else {
-        lcd.print(pit_temp);
+        lcd.print(padTemp(pit_temp));
       }
       lcd.setCursor(9, 0);
     } else if (lastTempDisplayed == "AMBIENT") {
       lcd.print(F("Amb:  "));
-      lcd.print(ambient_temp);
+      lcd.print(padTemp(ambient_temp));
       lcd.setCursor(9, 0);
     }
     
