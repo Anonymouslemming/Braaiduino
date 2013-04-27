@@ -1,0 +1,32 @@
+Key
+---
+n - LCD pin n
+SR-n - Shift Register pin n
+LCD-n - LCD pin n
+ARD-n - Arduino pin n
+
+  LCD pins                                Shift Register pins
+  --------                                -------------------
+  1  - GND                                1  - LCD-14
+  2  - 5V                                 2  - LCD-13
+  3  - Potentiometer middle pin           3  - LCD-12
+  4  - SR-7                               4  - LCD-11
+  5  - GND                                5  - LCD-16
+  6  - SR-15                              7  - LCD-4
+  11 - SR-4                               8  - GND
+  12 - SR-3                               10 - 5V
+  13 - SR-2                               11 - ARD-8
+  14 - SR-1                               12 - ARD-6
+  15 - 5V                                 13 - GND
+  16 - SR-5                               14 - ARD-5  
+                                          15 - LCD-6
+                                          16 - 5V
+
+
+
+
+
+
+
+
+
