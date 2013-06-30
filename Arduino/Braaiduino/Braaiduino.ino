@@ -196,8 +196,11 @@ void startCook(int cookState) {
   // If we get a cookID of 0 back, something went wrong, so we need to show that the cook has failed  
   if (cookId == "0") {
     cookState = 0;
-    showCookState(-1);
-  } else {
+    showCookState(-1);  
+  } else if (cookId == "D") {
+    Serial.println(F("Error when starting cook - trying again ..."));
+    startCook(cookState);
+  }else {
     // Update the LCD with the cook ID
     String idString = "ID:" + cookId;
   
@@ -401,13 +404,13 @@ String readPage() {
           client.flush();
           Serial.println(F("disconnecting."));
           Serial.println(inString);
-          Serial.println("Leaving to readPage ... ");
+          Serial.println("Leaving readPage ... ");
           return inString;
         }
       }
     }
   }
-  Serial.println("Leaving to readPage ... ");
+  Serial.println("Leaving readPage ... ");
   return inString;
 }
 
