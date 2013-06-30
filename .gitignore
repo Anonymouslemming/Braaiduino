@@ -1,2 +1,4 @@
 .DS_Store
 */.DS_Store
+Braaiduino.ino.LocalCustomizations.patch
+Braaiduino.ino.PublicCustomizations.patch

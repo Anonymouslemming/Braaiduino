@@ -6,10 +6,10 @@
 
 
 // Configuration variables for network / updating 
-char ssid[] = "YOURSSID";     //  your network SSID (name)
-char pass[] = "YOURPASSWORD";    // your network password
-IPAddress serverAddress(192,168,1,1);   // Address of the server to communicate with
-String webServiceIP = "192.168.1.1";
+char ssid[] = "Penguinpowered";     //  your network SSID (name)
+char pass[] = "Lemmings live here";    // your network password
+IPAddress serverAddress(192,168,10,1);   // Address of the server to communicate with
+String webServiceIP = "192.168.10.1";
 int serverPort = 3000;
 
 long displayTempUpdateInterval = 15000; // the amount of time (in millseconds) between performing temperature checks (30s)
@@ -219,11 +219,7 @@ void startCook(int cookState) {
 */
 void endCook(int cookState) {
   String endCookResponse = sendCookNetRequest("PUT", "{\"action\":\"endcook\"}");
-  lcd.setCursor(0,1);  
-  lcd.print(F("UPDATING "));
   endStatus = findEndStatus(endCookResponse);
-  lcd.setCursor(0,1);  
-  lcd.print(F("NET: OK  "));
   showCookState(cookState); 
 }
 
@@ -240,7 +236,6 @@ void updateTemperatures() {
   unsigned long currentMillis = millis();
   
   if(currentMillis - previousTempDisplayMillis > displayTempUpdateInterval) {  
-    
     previousTempDisplayMillis = currentMillis;
     float ambient_tempFloat = getVoltage(ambientTemperaturePin);  
     ambient_tempFloat = ((ambient_tempFloat - .5) * 100);
@@ -288,14 +283,14 @@ void updateTemperatures() {
     
     if (cookState == 1 && (currentMillis - previousTempNetMillis > netTempUpdateInterval)) {   
       previousTempNetMillis = currentMillis;
+      Serial.println(F("Updating webservice with temperatures"));
       lcd.setCursor(0,1);  
       lcd.print(F("UPDATING "));
-      Serial.println(F("Updating webservice with temperatures"));
-      
       String tempNetResponse = sendTempNetRequest(pit_temp, food_temp, ambient_temp, cookId);
       String tempId = findWebserviceReturnId(tempNetResponse);
       lcd.setCursor(0,1);  
       lcd.print(F("RUNNING  "));
+      
       // If we get a cookID of 0 back, something went wrong, so we need to show that the cook has failed  
       if (tempId == "0") {
         // TODO - display something when a temperature update fails
@@ -530,6 +525,7 @@ int thermister_temp(int aval) {
   //	R = log(((1024/(double)aval)-1)*(double)22200);
   R = log((1 / ((1024 / (double) aval) - 1)) * (double) 22200);
   
+  //lcd.print("A="); lcd.print(aval); lcd.print(" R="); lcd.print(R);
   // Compute degrees C
   T = (1 / ((2.3067434E-4) + (2.3696596E-4) * R + (1.2636414E-7) * R * R * R)) - 273.25;
   // return degrees F
